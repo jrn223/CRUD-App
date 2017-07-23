@@ -9,7 +9,9 @@ print("PRODUCTS APPLICATION")
 print("----------------------------------------------------------------------------------------")
 print("Hi jrn223, welcome to the Products Application! Enjoy and have a great day!")
 
-print("\n \nThere are 20 products in the database. Here is a list of the available operations: \n \n")
+with open(csv_file_path, "r") as csv_file:
+    number_products = sum(1 for row in csv_file) - 1
+    print("\n \nThere are " + str(number_products) + " products in the database. Here is a list of the available operations: \n \n")
 
 print("OPERATION  | DESCRIPTION")
 print("-----------|---------------------------------------------------")
@@ -29,11 +31,16 @@ if user_input == "List":
             print(row["id"], row["name"], row["aisle"], row["department"], row["price"])
 elif user_input == "Show":
     print("Show")
+
+elif user_input == "Update":
+    print("Update")
     print("OK. Please specify the product's information ...")
     input ("name:")
     input ("aisle:")
     input ("department:")
     input ("price:")
     print("CREATING A PRODUCT HERE!")
+elif user_input == "Destroy":
+    print("Destroy")
 else:
     print("OOPS. UNRECOGNIZED OPERATION. PLEASE CHOOSE ONE OF THE RECOGNIZED OPERATIONS.")
