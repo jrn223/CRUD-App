@@ -4,6 +4,19 @@ csv_file_path = "data\products.csv"
 
 products = []
 
+def show():
+    found = False
+    print("Show")
+    show_input = input ("OK. Please specify the product's identifier:")
+    with open(csv_file_path, "r") as csv_file:
+        reader = csv.DictReader(csv_file) # assuming your CSV has headers, otherwise... csv.reader(csv_file)
+
+        for row in reader:
+            if show_input == row["id"]:
+                print(row["id"], row["name"], row["aisle"], row["department"], row["price"])
+                found = True
+    return found
+
 print("----------------------------------------------------------------------------------------")
 print("PRODUCTS APPLICATION")
 print("----------------------------------------------------------------------------------------")
@@ -30,7 +43,11 @@ if user_input == "List":
         for row in reader:
             print(row["id"], row["name"], row["aisle"], row["department"], row["price"])
 elif user_input == "Show":
-    print("Show")
+    while (True):
+        if show():
+            break
+        else:
+            print("Product Not Found")
 
 elif user_input == "Update":
     print("Update")
