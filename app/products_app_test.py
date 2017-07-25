@@ -75,7 +75,7 @@ def update():
         if(product_number == product["id"]):
             update = True
             product["name"] = input("Change name from " + product["name"] + " to:")
-            product["aisle "] = input("Change aisle from " + product["aisle"] + " to:")
+            product["aisle"] = input("Change aisle from " + product["aisle"] + " to:")
             product["department"] = input("Change department from " + product["department"] + " to:")
             product["price"] = input("Change price from " + product["price"] + " to:")
             print("UPDATING A PRODUCT HERE!")
