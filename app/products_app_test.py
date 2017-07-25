@@ -7,10 +7,12 @@ csv_file_path = "data\products.csv"
 products = []
 
 with open(csv_file_path, "r") as csv_file:
-    reader = csv.DictReader(csv_file) # assuming your CSV has headers, otherwise... csv.reader(csv_file)
+    reader = csv.DictReader(csv_file)
     for row in reader:
         products.append(dict(row))
 
+#print(products)
+row_count = len(products)
 user_welcome = getpass.getuser()
 
 print("----------------------------------------------------------------------------------------")
@@ -18,7 +20,7 @@ print("PRODUCTS APPLICATION")
 print("----------------------------------------------------------------------------------------")
 print("Hi %s, welcome to the Products Application! Enjoy and have a great day! \n" %user_welcome)
 
-print("There are X products in the database. Here is a list of the available operations: \n")
+print("There are " + str(row_count) + " products in the database. Here is a list of the available operations: \n")
 
 print("OPERATION  | DESCRIPTION")
 print("-----------|---------------------------------------------------")
@@ -66,21 +68,27 @@ def create():
         writer.writerow({"id": new_id, "name": new_name, "aisle": new_aisle, "department": new_department, "price": new_price})
 
 def update():
-    found = False
+    update = False
     print("Update")
     product_number = input ("OK. Please specify the product's identifier:")
     for product in products:
         if(product_number == product["id"]):
-            update_name = input("Change name from " + product["name"] + " to:")
-    #             update_aisle = input("Change name from '" + row["aisle"] + "' to:")
-    #             update_department = input("Change name from '" + row["department"] + "' to:")
-    #             update_price = input("Change name from '" + row["price"] + "' to:")
-    #             writer.writerow({'name': update_name, 'aisle': update_aisle, 'department': update_department, 'price': update_price})
-    #             print("UPDATING A PRODUCT HERE!")
+            update = True
+            product["name"] = input("Change name from " + product["name"] + " to:")
+            product["aisle "] = input("Change aisle from " + product["aisle"] + " to:")
+            product["department"] = input("Change department from " + product["department"] + " to:")
+            product["price"] = input("Change price from " + product["price"] + " to:")
+            print("UPDATING A PRODUCT HERE!")
 
-#def destroy():
-    # print("Destroy")
-    # destroy_product = input("OK. Please specify the product's identifier:")
+            with open(csv_file_path, "w") as csv_file:
+                for product in products:
+                    writer = csv.DictWriter(product, fieldnames=["id", "name", "aisle", "department", "price"])
+                    
+            return update
+
+def destroy():
+    print("Destroy")
+    destroy_product = input("OK. Please specify the product's identifier:")
     # load_products()
     # product = ""
     # for item in products:
