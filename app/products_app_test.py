@@ -80,28 +80,29 @@ def update():
             product["price"] = input("Change price from " + product["price"] + " to:")
             print("UPDATING A PRODUCT HERE!")
 
-            with open(csv_file_path, "w") as csv_file:
-                for product in products:
-                    writer = csv.DictWriter(product, fieldnames=["id", "name", "aisle", "department", "price"])
-                    
+            with open(csv_file_path, "w", newline="") as csv_file:
+                writer = csv.DictWriter(csv_file, fieldnames=["id", "name", "aisle", "department", "price"])
+                writer.writeheader()
+                for updated_product in products:
+                    writer.writerow({"id": updated_product["id"], "name": updated_product["name"], "aisle": updated_product["aisle"], "department": updated_product["department"], "price": updated_product["price"]})
             return update
 
 def destroy():
+    update = False
     print("Destroy")
     destroy_product = input("OK. Please specify the product's identifier:")
-    # load_products()
-    # product = ""
-    # for item in products:
-    #     if item['id'] == int(destory_product):
-    #         product = item
-    # # product = [p for p in products if p["id"] == destroy_product][0]
-    # if product:
-    #     print("DESTROYING A PRODUCT HERE!", product)
-    #     del products[products.index(product)]
-    #     return True
-    # else:
-    #     print("COULDN'T FIND A PRODUCT WITH IDENTIFIER", destroy_product)
-    #     return False
+    for product in products:
+        if(destroy_product == product["id"]):
+            del products[products.index(product)]
+            update = True
+            print("DESTROYING A PRODUCT HERE!")
+
+            with open(csv_file_path, "w", newline="") as csv_file:
+                writer = csv.DictWriter(csv_file, fieldnames=["id", "name", "aisle", "department", "price"])
+                writer.writeheader()
+                for updated_product in products:
+                    writer.writerow({"id": updated_product["id"], "name": updated_product["name"], "aisle": updated_product["aisle"], "department": updated_product["department"], "price": updated_product["price"]})
+            return update
 
 def handler():
     user_input = input("Please select an operation:")
